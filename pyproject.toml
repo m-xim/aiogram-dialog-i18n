@@ -1,0 +1,73 @@
+[project]
+name = "aiogram-dialog-i18n"
+version = "0.1.0"
+description = "i18n text widget for aiogram-dialog powered by aiogram-i18n"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "m-xim", email = "i@m-xim.ru" }]
+requires-python = ">=3.10"
+dependencies = [
+    "aiogram-dialog>=2.0.0",
+    "aiogram-i18n>=1.4",
+    "magic-filter>=1.0.12",
+]
+
+keywords = [
+    "aiogram",
+    "aiogram-dialog",
+    "i18n",
+    "fluent",
+    "gettext",
+    "telegram",
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/m-xim/aiogram-dialog-i18n"
+Repository = "https://github.com/m-xim/aiogram-dialog-i18n"
+Issues = "https://github.com/m-xim/aiogram-dialog-i18n/issues"
+
+[dependency-groups]
+dev = [
+    "ruff",
+    "ty",
+    "pytest",
+    "pytest-asyncio",
+    "fluent-runtime>=0.4.0",
+]
+
+[build-system]
+requires = ["uv_build<0.13"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+
+[tool.uv]
+package = true
+
+[tool.semantic_release]
+allow_zero_version = true
+version_source = "pyproject"
+commit_message = "chore(release): {version}"
+version_toml = [
+    "pyproject.toml:project.version",
+]
+
+[tool.semantic_release.branches.main]
+match = "main"
+
+[tool.semantic_release.branches.develop]
+match = "develop"
+prerelease = true
