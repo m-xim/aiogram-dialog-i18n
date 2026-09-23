@@ -17,8 +17,6 @@ uv add aiogram-dialog-i18n
 pip install aiogram-dialog-i18n
 ```
 
-Requires Python 3.10+, `aiogram-dialog` 2.0+ and `aiogram-i18n` 1.4+.
-
 ## Usage
 
 `I18nFormat` (short alias: `T`) renders a translation key wherever aiogram-dialog expects a text: `Window`, `Button`, `List`, `Multi`, and so on. Params can be plain values, magic filters over window data or other text widgets.
@@ -94,10 +92,6 @@ I18nFormat("k", locale=F["lang"])  # not a locale: a message param named "locale
 There is no `I18nContext` in `aiogram_dialog.tools.render_preview`, so the widget shows the key with its params instead of a translation. An empty value is shown as `{name}`, like `Format` does. The window from [Usage](#usage) looks like this:
 
 <img src="https://raw.githubusercontent.com/m-xim/aiogram-dialog-i18n/main/assets/preview-keys.png" width="360" alt="Preview of the window: the key with its params">
-
-```
-hello-user(name={name}, balance={balance:.2f})
-```
 
 The list and the button are not shown, because there is no window data in a preview and `F["methods"]` is empty.
 
