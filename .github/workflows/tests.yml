@@ -40,7 +40,20 @@ jobs:
         run: uv run ty check --output-format=github .
 
       - name: Run pytest
-        run: uv run pytest
+        run: uv run pytest --cov --junitxml=junit.xml -o junit_family=legacy
+
+      - name: Upload results to Codecov
+        if: matrix.python-version == '3.14'
+        uses: codecov/codecov-action@v6
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() && matrix.python-version == '3.14' }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          report-type: test_results
 
   # Checks that the lower bounds declared in pyproject.toml really work.
   # Only project dependencies are lowered: an unbounded dev tool like pytest would resolve to 2.0.0.

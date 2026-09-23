@@ -44,6 +44,7 @@ dev = [
     "ty",
     "pytest",
     "pytest-asyncio",
+    "pytest-cov",
     "fluent-runtime>=0.4.0",
 ]
 
@@ -53,6 +54,9 @@ build-backend = "uv_build"
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+
+[tool.coverage.run]
+source_pkgs = ["aiogram_dialog_i18n"]
 
 [tool.uv]
 package = true

@@ -1,5 +1,12 @@
 # aiogram-dialog-i18n
 
+[![PyPI version](https://img.shields.io/pypi/v/aiogram-dialog-i18n?color=blue)](https://pypi.org/project/aiogram-dialog-i18n)
+[![codecov](https://codecov.io/github/m-xim/aiogram-dialog-i18n/graph/badge.svg)](https://codecov.io/github/m-xim/aiogram-dialog-i18n)
+[![Tests Status](https://github.com/m-xim/aiogram-dialog-i18n/actions/workflows/tests.yml/badge.svg)](https://github.com/m-xim/aiogram-dialog-i18n/actions)
+[![License](https://img.shields.io/github/license/m-xim/aiogram-dialog-i18n.svg)](/LICENSE)
+[![ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ty)
+
 Translated text widget for [aiogram-dialog](https://github.com/Tishka17/aiogram_dialog) powered by [aiogram-i18n](https://github.com/aiogram/i18n).
 
 ```bash
