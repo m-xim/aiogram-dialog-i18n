@@ -50,10 +50,10 @@ jobs:
 
       - name: Upload test results to Codecov
         if: ${{ !cancelled() && matrix.python-version == '3.14' }}
-        uses: codecov/test-results-action@v1
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          report-type: test_results
+          report_type: test_results
 
   # Checks that the lower bounds declared in pyproject.toml really work.
   # Only project dependencies are lowered: an unbounded dev tool like pytest would resolve to 2.0.0.
@@ -68,6 +68,7 @@ jobs:
         with:
           python-version: "3.10"
           enable-cache: true
+          cache-suffix: lowest-direct
 
       - name: Install the project with the lowest allowed dependencies
         run: |
