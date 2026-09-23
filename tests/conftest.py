@@ -13,11 +13,12 @@ class FakeI18n:
 
 
 class FakeManager:
-    def __init__(self, middleware_data: dict) -> None:
+    def __init__(self, middleware_data: dict, *, preview: bool = False) -> None:
         self.middleware_data = middleware_data
+        self.preview = preview
 
     def is_preview(self) -> bool:
-        return False
+        return self.preview
 
 
 @pytest.fixture
@@ -28,3 +29,8 @@ def manager() -> DialogManager:
 @pytest.fixture
 def manager_without_i18n() -> DialogManager:
     return cast("DialogManager", FakeManager({}))
+
+
+@pytest.fixture
+def preview_manager() -> DialogManager:
+    return cast("DialogManager", FakeManager({}, preview=True))

@@ -32,3 +32,10 @@ async def test_when(manager: DialogManager):
 async def test_without_middleware_raises(manager_without_i18n: DialogManager):
     with pytest.raises(ValueError, match="I18nContext not found"):
         await I18nFormat("k").render_text({}, manager_without_i18n)
+
+
+async def test_preview_shows_key_and_params_without_middleware(preview_manager: DialogManager):
+    widget = I18nFormat("hello", "en", name=F["n"], widget=Format("{n}!"), const="c")
+    assert await widget.render_text({"n": 5}, preview_manager) == "hello(const=c, name=5, widget=5!)"
+    assert await widget.render_text({}, preview_manager) == "hello(const=c, name={name}, widget={n}!)"
+    assert await I18nFormat("hello").render_text({}, preview_manager) == "hello"
