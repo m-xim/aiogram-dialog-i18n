@@ -9,15 +9,21 @@
 
 Translated text widget for [aiogram-dialog](https://github.com/Tishka17/aiogram_dialog) powered by [aiogram-i18n](https://github.com/aiogram/i18n).
 
+## Installation
+
 ```bash
 uv add aiogram-dialog-i18n
 # or
 pip install aiogram-dialog-i18n
 ```
 
+Requires Python 3.10+, `aiogram-dialog` 2.0+ and `aiogram-i18n` 1.4+.
+
 ## Usage
 
-Set up `I18nMiddleware` from [aiogram-i18n](https://github.com/aiogram/i18n) as usual: the widget takes `I18nContext` from `middleware_data["i18n"]` (its default `context_key`).
+`I18nFormat` (short alias: `T`) renders a translation key wherever aiogram-dialog expects a text: `Window`, `Button`, `List`, `Multi`, and so on. Params can be plain values, magic filters over window data or other text widgets.
+
+Set up `I18nMiddleware` from [aiogram-i18n](https://github.com/aiogram/i18n) as usual. The widget takes `I18nContext` from `middleware_data["i18n"]`, which is the default `context_key`, and raises `ValueError` if it is missing.
 
 ```ftl
 hello-user = Hello, { $name }! Balance: { $balance }
@@ -41,17 +47,26 @@ Window(
 )
 ```
 
-## `I18nFormat(key, locale=None, /, *, when=None, **params)`
+## Signature
 
-Renders the translation `key` with `params` in the current locale of the user. It is a regular aiogram-dialog text widget, so it works wherever a text is expected: `Window`, `Button`, `List`, `Multi`, …. `T` is a short alias.
+```python
+I18nFormat(key, locale=None, /, *, when=None, **params)
+```
 
-### Params
+- `key` is the translation key;
+- `locale` overrides the locale of the user, see [Locale](#locale);
+- `when` is the usual aiogram-dialog visibility condition, not a message param;
+- `params` are the message params, see [Params](#params).
 
-Every param is a `Value`:
+`key` and `locale` are positional-only, like in `I18nContext.get`, so a message can still have a param called `locale`.
 
-- a text widget is rendered (`Format`, `Const`, another `I18nFormat`, …);
-- a `MagicFilter` is resolved against window data;
-- anything else (`str`, `int`, `float`, `bool`) is passed as is.
+## Params
+
+Every param is one of:
+
+- a text widget, it is rendered (`Format`, `Const`, another `I18nFormat`, …);
+- a `MagicFilter`, it is resolved against window data;
+- a constant (`str`, `int`, `float`, `bool`), it is passed as is.
 
 `None` becomes an empty string.
 
@@ -64,9 +79,9 @@ I18nFormat(
 )
 ```
 
-### Locale
+## Locale
 
-By default the locale of the user is used. The second positional argument overrides it and is a `Value` too:
+By default the locale of the user is used. The second positional argument overrides it, it can be a constant, a magic filter or a text widget:
 
 ```python
 I18nFormat("k", "en")  # fixed locale
@@ -74,4 +89,20 @@ I18nFormat("k", F["lang"])  # locale from window data
 I18nFormat("k", locale=F["lang"])  # not a locale: a message param named "locale"
 ```
 
-`key` and `locale` are positional-only, like in `I18nContext.get`, so a message can still have a param called `locale`. `when` is the usual aiogram-dialog visibility condition, not a message param.
+## Preview
+
+There is no `I18nContext` in `aiogram_dialog.tools.render_preview`, so the widget shows the key with its params instead of a translation. An empty value is shown as `{name}`, like `Format` does. The window from [Usage](#usage) looks like this:
+
+<img src="https://raw.githubusercontent.com/m-xim/aiogram-dialog-i18n/main/assets/preview-keys.png" width="360" alt="Preview of the window: the key with its params">
+
+```
+hello-user(name={name}, balance={balance:.2f})
+```
+
+The list and the button are not shown, because there is no window data in a preview and `F["methods"]` is empty.
+
+With a real `I18nContext` the same window is rendered with translations, here in English and Russian:
+
+| English | Русский |
+|---|---|
+| <img src="https://raw.githubusercontent.com/m-xim/aiogram-dialog-i18n/main/assets/preview-en.png" width="360" alt="Window in English"> | <img src="https://raw.githubusercontent.com/m-xim/aiogram-dialog-i18n/main/assets/preview-ru.png" width="360" alt="Window in Russian"> |
