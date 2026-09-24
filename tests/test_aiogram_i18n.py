@@ -3,7 +3,7 @@ from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.text import Format, List
 from magic_filter import F
 
-from aiogram_dialog_i18n import I18nFormat, T
+from aiogram_dialog_i18n.aiogram_i18n import I18nFormat, T
 
 
 async def test_resolves_all_value_kinds(manager: DialogManager):

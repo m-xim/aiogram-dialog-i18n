@@ -1,7 +1,7 @@
 [project]
 name = "aiogram-dialog-i18n"
 version = "0.1.0"
-description = "i18n text widget for aiogram-dialog powered by aiogram-i18n"
+description = "i18n text widget for aiogram-dialog powered by aiogram-i18n or fluentogram"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -9,7 +9,6 @@ authors = [{ name = "m-xim", email = "i@m-xim.ru" }]
 requires-python = ">=3.10"
 dependencies = [
     "aiogram-dialog>=2.0.0",
-    "aiogram-i18n>=1.4",
     "magic-filter>=1.0.12",
 ]
 
@@ -18,6 +17,7 @@ keywords = [
     "aiogram-dialog",
     "i18n",
     "fluent",
+    "fluentogram",
     "gettext",
     "telegram",
 ]
@@ -33,19 +33,32 @@ classifiers = [
     "Typing :: Typed",
 ]
 
+[project.optional-dependencies]
+aiogram-i18n = ["aiogram-i18n>=1.5"]
+fluentogram = ["fluentogram>=1.1.10"]
+
 [project.urls]
 Homepage = "https://github.com/m-xim/aiogram-dialog-i18n"
 Repository = "https://github.com/m-xim/aiogram-dialog-i18n"
 Issues = "https://github.com/m-xim/aiogram-dialog-i18n/issues"
 
 [dependency-groups]
-dev = [
-    "ruff",
-    "ty",
+test = [
     "pytest",
     "pytest-asyncio",
     "pytest-cov",
-    "fluent-runtime>=0.4.0",
+    "aiogram-i18n",
+    "fluentogram",
+    "fluent-compiler",
+    "aiogram-dialog[tools]",  # render_preview in tests
+]
+lint = [
+    "ruff",
+    "ty",
+]
+dev = [
+    { include-group = "test" },
+    { include-group = "lint" },
 ]
 
 [build-system]

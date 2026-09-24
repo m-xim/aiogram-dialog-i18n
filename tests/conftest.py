@@ -3,7 +3,7 @@ from typing import cast
 import pytest
 from aiogram_dialog import DialogManager
 
-from aiogram_dialog_i18n.format import I18N_KEY
+from aiogram_dialog_i18n.aiogram_i18n import CONTEXT_KEY
 
 
 class FakeI18n:
@@ -23,7 +23,7 @@ class FakeManager:
 
 @pytest.fixture
 def manager() -> DialogManager:
-    return cast("DialogManager", FakeManager({I18N_KEY: FakeI18n()}))
+    return cast("DialogManager", FakeManager({CONTEXT_KEY: FakeI18n()}))
 
 
 @pytest.fixture
