@@ -81,6 +81,6 @@ Before opening an issue, search [existing issues](https://github.com/m-xim/aiogr
 
 Include:
 - Python version and OS
-- `aiogram-dialog-i18n`, `aiogram-dialog` and `aiogram-i18n` versions
+- `aiogram-dialog-i18n`, `aiogram-dialog` and `aiogram-i18n` or `fluentogram` versions
 - Minimal reproducible example
 - Full traceback if applicable
