@@ -5,7 +5,7 @@ from aiogram_dialog.api.protocols import DialogManager
 from aiogram_dialog.widgets.common import WhenCondition
 from aiogram_dialog.widgets.text import Text
 
-from aiogram_dialog_i18n._core.resolve import DYNAMIC, Dynamic, Value, resolve
+from aiogram_dialog_i18n._core.resolve import DYNAMIC, Constant, Dynamic, Value, resolve
 
 
 def require(middleware_data: dict, key: str, what: str) -> Any:
@@ -36,13 +36,21 @@ class BaseI18nFormat(Text, ABC):
         self.key = key
 
         # sorted once here, not on every render: the TextWidget protocol check is slow
-        self.dynamic_locale = locale if isinstance(locale, DYNAMIC) else None
-        self.locale = None if isinstance(locale, DYNAMIC) else locale
-        self.dynamic = {name: value for name, value in params.items() if isinstance(value, DYNAMIC)}
-        # None renders as "" on every core: Fluent raises on None (fluent-rs renders ""), gettext/jinja2 would print "None"
-        self.static = {
-            name: "" if value is None else value for name, value in params.items() if not isinstance(value, DYNAMIC)
-        }
+        self.locale: str | None = None
+        self.dynamic_locale: Dynamic | None = None
+        if not isinstance(locale, DYNAMIC):
+            self.locale = locale
+        else:
+            self.dynamic_locale = locale
+
+        self.dynamic: dict[str, Dynamic] = {}
+        self.static: dict[str, Constant] = {}
+        for name, value in params.items():
+            if not isinstance(value, DYNAMIC):
+                # None renders as "" on every core: Fluent raises on None (fluent-rs renders ""), gettext/jinja2 would print "None"
+                self.static[name] = "" if value is None else value
+            else:
+                self.dynamic[name] = value
 
     async def _render_text(self, data: dict, manager: DialogManager) -> str:
         params = dict(self.static)
