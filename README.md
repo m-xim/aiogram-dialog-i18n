@@ -105,33 +105,17 @@ Window(
 
 ## Arguments
 
-Both widgets take the same arguments:
-
 ```python
 I18nFormat(key, locale=None, /, *, when=None, **params)
 FluentogramFormat(key, locale=None, /, *, when=None, **params)
 ```
 
-- `key` is the translation key;
-- `locale` overrides the locale of the user, see [Locale](#locale);
-- `when` is the usual aiogram-dialog visibility condition, not a message param;
-- `params` are the message params, see [Params](#params).
+- `key`: the translation key.
+- `locale`: overrides the user's locale; positional-only, so `locale=...` is still a message param.
+- `when`: the usual aiogram-dialog condition, not a message param.
+- `params`: a text widget (rendered), a `MagicFilter` (resolved against window data) or a constant. `None` becomes `""`, so in Jinja2 use `{% if x %}`, not `is none`.
 
-`key` and `locale` are positional-only, so a message can still have a param called `locale`.
-
-### Params
-
-Every param is one of:
-
-- a text widget, it is rendered (`Format`, `Const`, another translated widget, …);
-- a `MagicFilter`, it is resolved against window data;
-- a constant (`str`, `int`, `float`, `bool`), it is passed as is.
-
-`None` becomes an empty string on every core, so in Jinja2 check it with `{% if x %}`, not `is none`.
-
-### Locale
-
-By default the locale of the user is used. The second positional argument overrides it, it can be a constant, a magic filter or a text widget:
+`locale` can be a constant, a magic filter or a text widget:
 
 ```python
 T("k", "en")  # fixed locale
