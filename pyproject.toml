@@ -1,6 +1,6 @@
 [project]
 name = "aiogram-dialog-i18n"
-version = "0.1.0"
+version = "0.2.0"
 description = "i18n text widget for aiogram-dialog powered by aiogram-i18n or fluentogram"
 readme = "README.md"
 license = "MIT"
