@@ -103,6 +103,23 @@ Window(
 )
 ```
 
+Outside widgets, take them from the data: `i18n` is the `TranslatorRunner` of the user, `translator_hub` is the `TranslatorHub`:
+
+```python
+from aiogram.filters import Command
+from aiogram.types import Message
+from fluentogram import TranslatorHub, TranslatorRunner
+
+
+@router.message(Command("start"))
+async def start(message: Message, i18n: TranslatorRunner, translator_hub: TranslatorHub):
+    await message.answer(i18n.get("hello-user", name=message.from_user.full_name))
+    # another locale
+    await message.answer(translator_hub.get_translator_by_locale("en").get("pay-btn"))
+```
+
+In aiogram-dialog callbacks and getters they are in `dialog_manager.middleware_data["i18n"]` and `dialog_manager.middleware_data["translator_hub"]`.
+
 ## Arguments
 
 ```python
