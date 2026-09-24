@@ -6,6 +6,7 @@
 [![License](https://img.shields.io/github/license/m-xim/aiogram-dialog-i18n.svg)](/LICENSE)
 [![ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ty)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/m-xim/aiogram-dialog-i18n)
 
 Translated text widget for [aiogram-dialog](https://github.com/Tishka17/aiogram_dialog) powered by [aiogram-i18n](https://github.com/aiogram/i18n) or [fluentogram](https://github.com/Arustinal/fluentogram).
 
