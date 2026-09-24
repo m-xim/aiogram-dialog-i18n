@@ -1,0 +1,1 @@
+CONTEXT_KEY = "i18n"
