@@ -2,21 +2,12 @@ from typing import cast
 
 import pytest
 from aiogram_dialog import DialogManager
-from fluent_compiler.bundle import FluentBundle
-from fluentogram import FluentTranslator, TranslatorHub
 from magic_filter import F
 
-from aiogram_dialog_i18n.fluentogram import HUB_KEY, RUNNER_KEY, T
-from tests.conftest import FakeManager
-
-HUB = TranslatorHub(
-    {"en": "en", "ru": ("ru", "en")},
-    [
-        FluentTranslator("en", FluentBundle.from_string("en", "hello = Hello, { $name }!", use_isolating=False)),
-        FluentTranslator("ru", FluentBundle.from_string("ru", "hello = Привет, { $name }!", use_isolating=False)),
-    ],
-    root_locale="en",
-)
+from aiogram_dialog_i18n.fluentogram import T
+from aiogram_dialog_i18n.fluentogram.constants import HUB_KEY, RUNNER_KEY
+from tests.fakes import FakeManager
+from tests.fluentogram.hub import HUB
 
 
 def make_manager(*, runner: bool = True, hub: bool = True) -> DialogManager:
@@ -41,3 +32,8 @@ async def test_without_runner_raises():
 async def test_locale_without_hub_raises():
     with pytest.raises(ValueError, match="TranslatorHub not found"):
         await T("hello", "en").render_text({}, make_manager(hub=False))
+
+
+async def test_preview_shows_key_and_params_without_middleware():
+    manager = cast("DialogManager", FakeManager({}, preview=True))
+    assert await T("hello", "en", name=F["n"]).render_text({}, manager) == "hello(name={name})"

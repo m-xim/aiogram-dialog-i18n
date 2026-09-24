@@ -50,7 +50,6 @@ test = [
     "aiogram-i18n",
     "fluentogram",
     "fluent-compiler",
-    "aiogram-dialog[tools]",  # render_preview in tests
 ]
 lint = [
     "ruff",
