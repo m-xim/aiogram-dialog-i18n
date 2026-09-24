@@ -37,6 +37,7 @@ ignore = [
 
 [lint.flake8-tidy-imports]
 ban-relative-imports = "all"
+banned-module-level-imports = ["aiogram_i18n", "fluentogram", "fluent_compiler"]
 
 [lint.per-file-ignores]
 "tests/**/*" = [
@@ -46,5 +47,6 @@ ban-relative-imports = "all"
     "S106",
     "S105",
     "ARG002",
-    "SLF001"
+    "SLF001",
+    "TID253"
 ]
