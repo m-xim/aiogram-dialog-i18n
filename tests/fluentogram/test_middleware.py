@@ -1,10 +1,9 @@
 from typing import Any, cast
 
 import pytest
-from aiogram import Dispatcher
-from aiogram.types import TelegramObject, Update, User
+from aiogram.types import TelegramObject, User
 
-from aiogram_dialog_i18n.fluentogram import BaseLocaleManager, FluentogramMiddleware, constants
+from aiogram_dialog_i18n.fluentogram import FluentogramMiddleware
 from tests.fluentogram.hub import HUB
 
 
@@ -16,43 +15,27 @@ async def call(middleware: FluentogramMiddleware, data: dict[str, Any]) -> str:
     async def handler(_: TelegramObject, __: dict[str, Any]) -> None: ...
 
     await middleware(handler, cast("TelegramObject", None), data)
-    assert data[constants.HUB_KEY] is HUB
-    return data[constants.RUNNER_KEY].get("hello", name="Bob")
+    assert data[middleware.hub_key] is HUB
+    return data[middleware.runner_key].get("hello", name="Bob")
 
 
 async def test_locale_of_the_user():
     assert await call(FluentogramMiddleware(HUB), {"event_from_user": user("ru")}) == "Привет, Bob!"
 
 
-@pytest.mark.parametrize("data", [{}, {"event_from_user": user(None)}])
-async def test_falls_back_to_root_locale(data: dict[str, Any]):
+@pytest.mark.parametrize("data", [{}, {"event_from_user": user(None)}], ids=["no_user", "no_language_code"])
+async def test_without_language_code_is_root_locale(data: dict[str, Any]):
     assert await call(FluentogramMiddleware(HUB), data) == "Hello, Bob!"
 
 
-DB = {1: "ru"}  # background updates of BgManager have no language_code
-
-
-class DbManager(BaseLocaleManager):
-    async def get_locale(self, event: Update, data: dict[str, Any]) -> str | None:
-        return DB.get(data["event_from_user"].id)
-
-
-async def test_get_locale_is_overridden():
-    assert await call(FluentogramMiddleware(HUB, DbManager()), {"event_from_user": user(None)}) == "Привет, Bob!"
-
-
-async def test_constants(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setattr(constants, "RUNNER_KEY", "tr")
-    monkeypatch.setattr(constants, "HUB_KEY", "hub")
-    monkeypatch.setattr(constants, "MIDDLEWARE_KEY", "mw")
+async def test_default_keys():
+    # handlers take them as arguments: i18n: TranslatorRunner, translator_hub: TranslatorHub
     data: dict[str, Any] = {"event_from_user": user("ru")}
+    await call(FluentogramMiddleware(HUB), data)
+    assert {"i18n", "translator_hub"} <= set(data)
 
-    assert await call(FluentogramMiddleware(HUB), data) == "Привет, Bob!"
-    assert set(data) == {"event_from_user", "tr", "hub", "mw"}
 
-
-def test_setup_registers_for_every_update():
-    dp = Dispatcher()
-    middleware = FluentogramMiddleware(HUB)
-    middleware.setup(dp)
-    assert middleware in dp.update.outer_middleware
+async def test_keys():
+    data: dict[str, Any] = {"event_from_user": user("ru")}
+    assert await call(FluentogramMiddleware(HUB, runner_key="tr", hub_key="hub"), data) == "Привет, Bob!"
+    assert not {"i18n", "translator_hub"} & set(data)

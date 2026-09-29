@@ -1,4 +1,6 @@
-class FakeI18n:
+class FakeCore:
+    default_locale: str | None = None
+
     def get(self, key: str, locale: str | None = None, /, **kwargs: object) -> str:
         params = ",".join(f"{k}={v}" for k, v in sorted(kwargs.items()))
         return f"{key}[{locale}]({params})"
