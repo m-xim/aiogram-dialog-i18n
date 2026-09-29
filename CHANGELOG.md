@@ -2,6 +2,30 @@
 
 <!-- version list -->
 
+## v0.3.0 (2026-09-29)
+
+### Bug Fixes
+
+- Reorder import of MIDDLEWARE_KEY in conftest.py
+  ([`eac371a`](https://github.com/m-xim/aiogram-dialog-i18n/commit/eac371a0c4753d67dca80f0a23ac8d8a297ab5ae))
+
+- **aiogram_i18n**: Take I18nMiddleware from the dispatcher data, not the last created one
+  ([`6d8b160`](https://github.com/m-xim/aiogram-dialog-i18n/commit/6d8b1605e2e14cf485719ae7a751aa708a22f053))
+
+- **fluentogram**: Handle a locale change at runtime
+  ([`e91874e`](https://github.com/m-xim/aiogram-dialog-i18n/commit/e91874eac9e87e0b7ffc94ebebc7afd6742f6455))
+
+### Chores
+
+- **deps**: Update Python version requirements and dependencies in pyproject.toml
+  ([`7411ab7`](https://github.com/m-xim/aiogram-dialog-i18n/commit/7411ab78265d2892a32106d307c64b8a38eaa14b))
+
+### Features
+
+- Take the i18n keys from the middleware, not from module constants
+  ([`a965a13`](https://github.com/m-xim/aiogram-dialog-i18n/commit/a965a13f47344ab1a867e412a254c6ecd218181a))
+
+
 ## v0.2.0 (2026-09-24)
 
 ### Bug Fixes
