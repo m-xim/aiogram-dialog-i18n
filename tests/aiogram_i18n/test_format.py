@@ -1,5 +1,3 @@
-import asyncio
-import contextvars
 from typing import cast
 
 import pytest
@@ -36,19 +34,21 @@ async def test_when(manager: DialogManager):
     assert await I18nFormat("k", when=F["show"]).render_text({"show": False}, manager) == ""
 
 
-async def test_context_key_of_the_middleware():
-    assert await T("k").render_text({}, make_manager(context_key="ctx")) == "k[ru]()"
+async def test_middleware_of_each_dispatcher():
+    first = make_manager(context_key="ctx")
+    second = make_manager(context_key="other")  # created later, example: for another bot
+    assert await T("k").render_text({}, first) == "k[ru]()"
+    assert await T("k").render_text({}, second) == "k[ru]()"
 
 
 async def test_without_middleware_raises():
-    render = I18nFormat("k").render_text({}, cast("DialogManager", FakeManager({})))
     with pytest.raises(ValueError, match="I18nMiddleware not found"):
-        await asyncio.create_task(render, context=contextvars.Context())  # no I18nMiddleware created in it
+        await I18nFormat("k").render_text({}, cast("DialogManager", FakeManager({})))
 
 
 async def test_without_context_raises():
     manager = make_manager()
-    manager.middleware_data.clear()  # the middleware is created, but did not run for the update
+    del manager.middleware_data["i18n"]  # the middleware is set up, but did not run for the update
     with pytest.raises(ValueError, match="I18nContext not found"):
         await I18nFormat("k").render_text({}, manager)
 

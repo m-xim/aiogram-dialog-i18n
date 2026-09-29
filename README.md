@@ -30,7 +30,8 @@ pip install "aiogram-dialog-i18n[aiogram-i18n]"
 
 ### Setup
 
-Set up `I18nMiddleware` as usual, with any `context_key`: the widgets take `I18nContext` by the `context_key` of the middleware.
+Set up `I18nMiddleware` as usual with `setup(dp)`, with any `context_key`: the widgets take it from the dispatcher of the update, so several bots in one process work.
+`middleware_key` must stay the default `"i18n_middleware"`.
 
 ### Usage
 

@@ -1,3 +1,4 @@
+from aiogram_dialog_i18n.aiogram_i18n.format import MIDDLEWARE_KEY
 from typing import TYPE_CHECKING, cast
 
 import pytest
@@ -11,10 +12,10 @@ if TYPE_CHECKING:
 
 
 def make_manager(context_key: str = "i18n") -> DialogManager:
-    """The data of an update of a user with the locale "ru" after ``I18nMiddleware(context_key=...)``."""
-    middleware = I18nMiddleware(cast("BaseCore", FakeCore()), context_key=context_key)  # the current one from now
+    """The data of an update of a user with the locale "ru" after ``I18nMiddleware(context_key=...).setup(dp)``."""
+    middleware = I18nMiddleware(cast("BaseCore", FakeCore()), context_key=context_key)
     context = middleware.new_context(locale="ru", data={})
-    return cast("DialogManager", FakeManager({context_key: context}))
+    return cast("DialogManager", FakeManager({MIDDLEWARE_KEY: middleware, context_key: context}))
 
 
 @pytest.fixture
