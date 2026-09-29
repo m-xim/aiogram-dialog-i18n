@@ -2,7 +2,7 @@ from typing import cast
 
 import pytest
 from aiogram_dialog import DialogManager
-from magic_filter import F
+from magic_filter import F, MagicFilter
 
 from aiogram_dialog_i18n.fluentogram import T
 from aiogram_dialog_i18n.fluentogram.constants import HUB_KEY, RUNNER_KEY
@@ -22,6 +22,11 @@ def make_manager(*, runner: bool = True, hub: bool = True) -> DialogManager:
 async def test_none_is_empty():
     # a real Fluent bundle raises on None, the widget passes "" instead
     assert await T("hello", name=F["missing"]).render_text({}, make_manager()) == "Привет, !"
+
+
+@pytest.mark.parametrize("locale", ["en", F["lang"]])
+async def test_locale_takes_hub_not_user_runner(locale: str | MagicFilter):
+    assert await T("hello", locale, name="Bob").render_text({"lang": "en"}, make_manager()) == "Hello, Bob!"
 
 
 async def test_without_runner_raises():

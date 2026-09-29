@@ -72,16 +72,23 @@ from aiogram_dialog_i18n.fluentogram import FluentogramMiddleware
 FluentogramMiddleware(hub).setup(dp)
 ```
 
-To take the locale from a database, override `get_locale`:
+The locale is `language_code` of the user. To take it from a database, pass a manager:
 
 ```python
-class DbFluentogramMiddleware(FluentogramMiddleware):
-    async def get_locale(self, event, data):
+from typing import Any
+
+from aiogram.types import Update
+
+from aiogram_dialog_i18n.fluentogram import BaseLocaleManager
+
+
+class DbLocaleManager(BaseLocaleManager):
+    async def get_locale(self, event: Update, data: dict[str, Any]) -> str | None:
         user = await data["repo"].get_user(data["event_from_user"].id)
         return user.language if user else None
 
 
-DbFluentogramMiddleware(hub).setup(dp)
+FluentogramMiddleware(hub, DbLocaleManager()).setup(dp)
 ```
 
 ### Usage
@@ -120,6 +127,8 @@ async def start(message: Message, i18n: TranslatorRunner, translator_hub: Transl
 ```
 
 In aiogram-dialog callbacks and getters they are in `dialog_manager.middleware_data["i18n"]` and `dialog_manager.middleware_data["translator_hub"]`.
+
+<!-- Translate the window with widgets, not in getters: a locale changed in a handler is shown by the widgets at once, while getters run before them and get the old `i18n` until the next update. -->
 
 ## Arguments
 
