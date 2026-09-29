@@ -63,8 +63,8 @@ class BaseI18nFormat(Text, ABC):
             return f"{self.key}({args})" if args else self.key
 
         locale = self.locale if self.dynamic_locale is None else await resolve(self.dynamic_locale, data, manager)
-        return self._translate(manager.middleware_data, locale, params)
+        return await self._translate(manager.middleware_data, locale, params)
 
     @abstractmethod
-    def _translate(self, middleware_data: dict, locale: str | None, params: dict[str, Any]) -> str:
+    async def _translate(self, middleware_data: dict, locale: str | None, params: dict[str, Any]) -> str:
         """Translates ``self.key``, ``locale`` is None for the locale of the user."""

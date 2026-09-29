@@ -50,3 +50,5 @@ banned-module-level-imports = ["aiogram_i18n", "fluentogram", "fluent_compiler"]
     "SLF001",
     "TID253"
 ]
+"src/aiogram_dialog_i18n/aiogram_i18n/*" = ["TID253"]
+"src/aiogram_dialog_i18n/fluentogram/*" = ["TID253"]

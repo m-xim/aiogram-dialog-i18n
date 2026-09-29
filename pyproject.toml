@@ -6,9 +6,9 @@ readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "m-xim", email = "i@m-xim.ru" }]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
-    "aiogram-dialog>=2.0.0",
+    "aiogram-dialog>=2.6.0",
     "magic-filter>=1.0.12",
 ]
 
@@ -23,7 +23,6 @@ keywords = [
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
@@ -50,6 +49,7 @@ test = [
     "aiogram-i18n",
     "fluentogram",
     "fluent-compiler",
+    "aiogram-dialog[tools]",
 ]
 lint = [
     "ruff",
@@ -75,6 +75,7 @@ package = true
 
 [tool.semantic_release]
 allow_zero_version = true
+major_on_zero = false
 version_source = "pyproject"
 commit_message = "chore(release): {version}"
 version_toml = [
