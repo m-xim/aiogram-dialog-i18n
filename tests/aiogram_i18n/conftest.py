@@ -1,10 +1,10 @@
-from aiogram_dialog_i18n.aiogram_i18n.format import MIDDLEWARE_KEY
 from typing import TYPE_CHECKING, cast
 
 import pytest
 from aiogram_dialog import DialogManager
 from aiogram_i18n import I18nMiddleware
 
+from aiogram_dialog_i18n.aiogram_i18n.format import MIDDLEWARE_KEY
 from tests.fakes import FakeCore, FakeManager
 
 if TYPE_CHECKING:
