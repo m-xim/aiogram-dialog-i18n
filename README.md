@@ -30,7 +30,7 @@ pip install "aiogram-dialog-i18n[aiogram-i18n]"
 
 ### Setup
 
-Set up `I18nMiddleware` as usual.
+Set up `I18nMiddleware` as usual, with any `context_key`: the widgets take `I18nContext` by the `context_key` of the middleware.
 
 ### Usage
 
@@ -127,6 +127,12 @@ async def start(message: Message, i18n: TranslatorRunner, translator_hub: Transl
 ```
 
 In aiogram-dialog callbacks and getters they are in `dialog_manager.middleware_data["i18n"]` and `dialog_manager.middleware_data["translator_hub"]`.
+
+The keys are set on the middleware, the widgets work with any of them:
+
+```python
+FluentogramMiddleware(hub, runner_key="tr", hub_key="hub").setup(dp)
+```
 
 <!-- Translate the window with widgets, not in getters: a locale changed in a handler is shown by the widgets at once, while getters run before them and get the old `i18n` until the next update. -->
 
