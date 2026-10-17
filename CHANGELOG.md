@@ -2,6 +2,34 @@
 
 <!-- version list -->
 
+## v0.3.1 (2026-10-17)
+
+### Bug Fixes
+
+- **tests**: Ignore invalid-mutable-override for DbManager locale methods
+  ([`931ccba`](https://github.com/m-xim/aiogram-dialog-i18n/commit/931ccbafde65fd6a8d08c90db6e7aa06033b481c))
+
+### Chores
+
+- **ci**: Bump astral-sh/setup-uv from 10.1.0 to 10.2.0
+  ([`727f7b0`](https://github.com/m-xim/aiogram-dialog-i18n/commit/727f7b0258cfb2114fae15ed21c50a2d4d6a3552))
+
+- **ci**: Bump astral-sh/setup-uv from 10.2.0 to 10.3.0
+  ([`3a5fdb2`](https://github.com/m-xim/aiogram-dialog-i18n/commit/3a5fdb24ec2dcf8f6afc0249c0793059a93e22db))
+
+- **ci**: Bump codecov/codecov-action from 6 to 7
+  ([`544f4b8`](https://github.com/m-xim/aiogram-dialog-i18n/commit/544f4b83a53b32bd6572cabb89bb4b89ff7fb174))
+
+- **ci**: Bump python-semantic-release/publish-action
+  ([`6ec66ff`](https://github.com/m-xim/aiogram-dialog-i18n/commit/6ec66ff867282704ed125bab7f8778f7ab2dacbe))
+
+- **ci**: Bump python-semantic-release/python-semantic-release
+  ([`df071ae`](https://github.com/m-xim/aiogram-dialog-i18n/commit/df071ae189f76cbcaa0136cb996f3840cfdd2f38))
+
+- **deps**: Update uv-build requirement from <0.13 to <0.14
+  ([`7fa8ae2`](https://github.com/m-xim/aiogram-dialog-i18n/commit/7fa8ae286ca814a1555783ed793508009f3f2882))
+
+
 ## v0.3.0 (2026-09-29)
 
 ### Bug Fixes
