@@ -12,10 +12,12 @@ from tests.dialog import Library
 
 
 class DbManager(BaseManager):
-    async def get_locale(self, event_from_user: User, db: dict[int, str]) -> str:
+    async def get_locale(self, event_from_user: User, db: dict[int, str]) -> str:  # ty: ignore[invalid-mutable-override]
         return db[event_from_user.id]
 
-    async def set_locale(self, locale: str, event_from_user: User, db: dict[int, str]) -> None:
+    async def set_locale(  # ty: ignore[invalid-mutable-override]
+        self, locale: str, event_from_user: User, db: dict[int, str]
+    ) -> None:
         db[event_from_user.id] = locale
 
 
